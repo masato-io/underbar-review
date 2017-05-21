@@ -98,10 +98,26 @@
   _.reject = function(collection, test) {
     // TIP: see if you can re-use _.filter() here, without simply
     // copying code in and modifying it
+
+    // get array by test using filter
+    let filteredArray = _.filter(collection, test);
+    // filter collection by using indexOf to identify values that doesn't exist in above array
+    return _.filter(collection, v => _.indexOf(filteredArray, v) === -1)
   };
 
   // Produce a duplicate-free version of the array.
   _.uniq = function(array) {
+    // empty array
+    let resultArray = [];
+    // iterate over the array
+    _.each(array, (v) => {
+      // value doesn't exist in empty array
+      if(_.indexOf(resultArray, v) === -1){
+        resultArray.push(v);
+      }
+    });
+    // return array
+    return resultArray;
   };
 
 
