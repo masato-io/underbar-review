@@ -340,6 +340,20 @@
   // already computed the result for the given argument and return that value
   // instead if possible.
   _.memoize = function(func) {
+    var memo = {};
+    var result;
+
+    return function(){
+      var arg = JSON.stringify(arguments);
+
+      if (arg in memo) {
+        return memo[arg];
+      } else {
+        result = func.apply(this, arguments);
+        memo[arg] = result;
+        return result;
+      }
+    };
   };
 
   // Delays a function for the given number of milliseconds, and then calls
@@ -349,6 +363,7 @@
   // parameter. For example _.delay(someFunction, 500, 'a', 'b') will
   // call someFunction('a', 'b') after 500ms
   _.delay = function(func, wait) {
+    setTimeout.apply(this, arguments);
   };
 
 
@@ -363,8 +378,21 @@
   // input array. For a tip on how to make a copy of an array, see:
   // http://mdn.io/Array.prototype.slice
   _.shuffle = function(array) {
+    var arr = [];
+    function generateRandomNumber(){return Math.floor(Math.random() * array.length)}
+    for (var i = 0; i < array.length; i++) {
+      var x = generateRandomNumber();
+      while (arr[x] !== undefined) {
+        x = generateRandomNumber();
+      }
+      arr[x] = array[i];
+    }
+    return arr;
   };
 
+  //Mutate an object = Change the object's value without changing its id.
+  // Some methods can mutate an array, e.g. push, pop, array[index] = value;
+  // Some methods can't mutate an aray, e.g. array.slice(2, 8);
 
   /**
    * ADVANCED

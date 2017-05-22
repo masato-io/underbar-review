@@ -282,7 +282,6 @@
         _.defaults(destination, source);
 
         expect(destination.b).to.equal(1);
-
       });
 
       it('should not copy a property if that key is already set on the target', function() {
